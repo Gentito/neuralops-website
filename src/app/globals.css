@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #05060a;
+  --fg: #ffffff;
+}
+
+html.light {
+  color-scheme: dark;
+  --bg: #0b1025;
+  --fg: #f7fbff;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply antialiased;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}
