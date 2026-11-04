@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAgent, getAgentParams, getTools } from "@/lib/agents";
+import { AgentRunPanel } from "@/components/agents/AgentRunPanel";
 import { InstallPanel } from "@/components/agents/InstallPanel";
 import { Container } from "@/components/ui/Container";
 
@@ -124,6 +125,15 @@ export default async function AgentPage({ params }: { params: Params }) {
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
         </article>
+
+        <AgentRunPanel
+          agent={{
+            name: agent.name,
+            slug: agent.slug,
+            division: agent.division,
+            accent: agent.accent
+          }}
+        />
 
         <InstallPanel
           tools={tools}
