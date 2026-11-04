@@ -38,7 +38,8 @@ export default function Page() {
       <CursorGlow />
       <Navbar />
       <main className="relative">
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(900px_circle_at_20%_10%,rgba(34,211,238,0.12),transparent_50%),radial-gradient(900px_circle_at_80%_20%,rgba(168,85,247,0.10),transparent_55%),linear-gradient(to_bottom,rgba(255,255,255,0.04),transparent_38%)]" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(900px_circle_at_15%_5%,rgba(88,196,255,0.10),transparent_50%),radial-gradient(900px_circle_at_85%_15%,rgba(168,130,255,0.08),transparent_55%)]" />
+        <div className="cinematic-grid pointer-events-none fixed inset-0 -z-10 opacity-60" />
         <Hero />
         <About />
         <Services />

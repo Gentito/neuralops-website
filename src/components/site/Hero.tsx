@@ -1,88 +1,96 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { company } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { HeroVideo } from "./HeroVideo";
 
-const HeroCanvas = dynamic(
-  () => import("@/components/three/HeroCanvas").then((m) => m.HeroCanvas),
+const AiHeroBackground = dynamic(
+  () =>
+    import("@/components/three/AiHeroBackground").then(
+      (m) => m.AiHeroBackground
+    ),
   {
     ssr: false,
-    loading: () => (
-      <div className="absolute inset-0 animate-pulse bg-gradient-to-b from-white/5 to-transparent" />
-    )
+    loading: () => <div className="absolute inset-0 bg-ink" />
   }
 );
 
+const stats = [
+  { label: "Performance-first", value: "90+ Lighthouse" },
+  { label: "Motion system", value: "Framer + GSAP" },
+  { label: "Immersive", value: "WebGL / R3F" }
+] as const;
+
+function scrollTo(id: string) {
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
 export function Hero() {
   return (
-    <section id="top" className="relative min-h-[100svh] overflow-hidden">
-      <div className="absolute inset-0">
-        <HeroVideo className="absolute inset-0 h-full w-full object-cover" />
-        <HeroCanvas />
-        <div className="noise pointer-events-none absolute inset-0" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-ink/10 to-ink" />
-      </div>
+    <section
+      id="top"
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden"
+    >
+      <AiHeroBackground className="opacity-90" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(1000px_circle_at_20%_20%,rgba(88,196,255,0.10),transparent_55%)]"
+      />
+      <div
+        aria-hidden
+        className="noise pointer-events-none absolute inset-0"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink via-ink/70 to-transparent"
+      />
 
-      <Container className="relative flex min-h-[100svh] flex-col justify-center py-28">
-        <div className="max-w-3xl">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-white/80 ring-1 ring-white/10">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.6)]" />
-            Futuristic IT solutions for modern teams
+      <Container className="relative py-28">
+        <div className="max-w-4xl">
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-white/70 backdrop-blur">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400/70" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan-300" />
+            </span>
+            Futuristic IT solutions
           </div>
 
-          <h1 className="font-[var(--font-space)] text-4xl leading-[1.05] tracking-tight md:text-6xl">
+          <h1 className="text-gradient mt-7 font-[var(--font-space)] text-[2.6rem] leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
             {company.headline}
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-white/75 md:text-xl">
+
+          <p className="mt-6 max-w-2xl text-lg text-white/65 md:text-xl">
             {company.subheadline}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button
-              size="lg"
-              onClick={() =>
-                document.getElementById("contact")?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start"
-                })
-              }
-            >
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <Button size="lg" onClick={() => scrollTo("contact")}>
               Start a Project
             </Button>
-            <Link href="#work" className="inline-flex">
-              <Button
-                size="lg"
-                variant="secondary"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("work")?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                  });
-                }}
-              >
-                View Our Work
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              variant="secondary"
+              onClick={() => scrollTo("work")}
+            >
+              View Our Work
+            </Button>
           </div>
 
-          <div className="mt-10 grid max-w-2xl grid-cols-2 gap-3 text-sm text-white/70 md:grid-cols-3">
-            <div className="rounded-2xl bg-white/4 p-4 ring-1 ring-white/10">
-              <div className="text-white">Performance-first</div>
-              <div className="mt-1 text-white/60">90+ Lighthouse targets</div>
-            </div>
-            <div className="rounded-2xl bg-white/4 p-4 ring-1 ring-white/10">
-              <div className="text-white">Smooth motion</div>
-              <div className="mt-1 text-white/60">Framer + GSAP</div>
-            </div>
-            <div className="hidden rounded-2xl bg-white/4 p-4 ring-1 ring-white/10 md:block">
-              <div className="text-white">3D immersion</div>
-              <div className="mt-1 text-white/60">React Three Fiber</div>
-            </div>
+          <div className="mt-14 grid max-w-3xl divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            {stats.map((s) => (
+              <div key={s.label} className="px-6 py-5">
+                <div className="text-xs uppercase tracking-[0.18em] text-white/45">
+                  {s.label}
+                </div>
+                <div className="mt-2 font-[var(--font-space)] text-lg text-white">
+                  {s.value}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </Container>

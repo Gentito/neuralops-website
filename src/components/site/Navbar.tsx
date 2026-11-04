@@ -30,14 +30,18 @@ export function Navbar() {
       <div className="pointer-events-auto mx-auto max-w-6xl px-5 md:px-8">
         <div
           className={cn(
-            "mt-4 flex h-14 items-center justify-between rounded-2xl px-4 ring-1 transition",
-            "bg-ink/40 backdrop-blur-xl",
-            scrolled ? "ring-white/14 shadow-glow" : "ring-white/10"
+            "mt-4 flex h-14 items-center justify-between rounded-2xl px-3 ring-1 backdrop-blur-2xl transition-all duration-300",
+            scrolled
+              ? "bg-ink/70 ring-white/12 shadow-glow"
+              : "bg-ink/35 ring-white/[0.08]"
           )}
         >
-          <Link href="#top" className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-cyan-400/70 to-purple-500/60 ring-1 ring-white/15" />
-            <span className="font-[var(--font-space)] text-sm tracking-wide">
+          <Link href="#top" className="group flex items-center gap-2.5 pl-1">
+            <span className="relative grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-white to-white/55 ring-1 ring-white/25">
+              <span className="h-3 w-3 rounded-[4px] bg-ink" />
+              <span className="absolute inset-0 rounded-xl shadow-[0_0_22px_-2px_rgba(88,196,255,0.75)]" />
+            </span>
+            <span className="font-[var(--font-space)] text-sm tracking-[0.03em] text-white">
               NeuralOps
             </span>
           </Link>
@@ -47,7 +51,7 @@ export function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className="rounded-full px-3 py-2 text-sm text-white/75 transition hover:bg-white/5 hover:text-white"
+                className="rounded-full px-3 py-2 text-sm text-white/65 transition hover:bg-white/[0.06] hover:text-white"
                 onClick={(e) => {
                   e.preventDefault();
                   scrollToHash(item.href);
@@ -58,7 +62,7 @@ export function Navbar() {
             ))}
             <Link
               href="/agents"
-              className="rounded-full px-3 py-2 text-sm text-white/75 transition hover:bg-white/5 hover:text-white"
+              className="rounded-full px-3 py-2 text-sm text-cyan-300/90 transition hover:bg-white/[0.06] hover:text-cyan-200"
             >
               Agents
             </Link>
@@ -67,7 +71,7 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               href="/agents"
-              className="rounded-full px-3 py-2 text-sm text-white/75 transition hover:bg-white/5 hover:text-white md:hidden"
+              className="rounded-full px-3 py-2 text-sm text-cyan-300/90 transition hover:bg-white/[0.06] hover:text-cyan-200 md:hidden"
             >
               Agents
             </Link>
@@ -84,4 +88,3 @@ export function Navbar() {
     </header>
   );
 }
-

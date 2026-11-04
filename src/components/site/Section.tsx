@@ -13,14 +13,17 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn(
-        "relative scroll-mt-28 py-16 md:py-24",
-        "before:pointer-events-none before:absolute before:inset-0 before:bg-radial-glow before:opacity-80",
-        className
-      )}
+      className={cn("relative scroll-mt-28 py-20 md:py-28", className)}
     >
+      <div
+        aria-hidden
+        className="hairline pointer-events-none absolute inset-x-0 top-0 h-px"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-radial-glow opacity-70"
+      />
       {children}
     </section>
   );
 }
-

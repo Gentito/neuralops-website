@@ -4,13 +4,15 @@
 
 :root {
   color-scheme: dark;
-  --bg: #05060a;
+  --bg: #04050a;
   --fg: #ffffff;
+  --accent: 88 196 255;
+  --accent-2: 168 130 255;
 }
 
 html.light {
   color-scheme: dark;
-  --bg: #0b1025;
+  --bg: #070b1a;
   --fg: #f7fbff;
 }
 
@@ -19,18 +21,120 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply antialiased;
   background: var(--bg);
   color: var(--fg);
+  font-feature-settings: "ss01" 1, "cv01" 1;
+  text-rendering: optimizeLegibility;
 }
 
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
+::selection {
+  background: rgb(var(--accent) / 0.28);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--accent) / 0.45);
+}
+
+@layer components {
+  /* Shared cinematic surface used across every section. */
+  .panel {
+    @apply relative overflow-hidden rounded-3xl bg-white/[0.03] ring-1 ring-white/10 backdrop-blur-xl;
+  }
+
+  /* Static top hairline that fades out to both edges. */
+  .panel-topline {
+    @apply pointer-events-none absolute inset-x-6 top-0 h-px;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--accent) / 0.55),
+      transparent
+    );
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-cyan-300/90;
+  }
+
+  .hairline {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.16),
+      transparent
+    );
+  }
+}
+
 .noise {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
-  opacity: 0.35;
+  opacity: 0.28;
+}
+
+/* Faint blueprint grid that fades toward the edges. */
+.cinematic-grid {
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    #000 25%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    #000 25%,
+    transparent 78%
+  );
+}
+
+/* Bright-white display treatment for large headings. */
+.text-gradient {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.62) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-float,
+  .animate-shimmer,
+  .animate-pulse-slow {
+    animation: none !important;
+  }
 }

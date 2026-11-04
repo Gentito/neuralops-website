@@ -4,56 +4,60 @@ import { useState } from "react";
 import { company } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/motion/Reveal";
 import { Section } from "./Section";
+import { SectionHeading } from "./SectionHeading";
 
 type Status = "idle" | "sending" | "sent" | "error";
+
+const fieldClass =
+  "h-11 rounded-2xl bg-ink/40 px-4 text-sm text-white ring-1 ring-white/12 outline-none transition placeholder:text-white/35 focus:ring-cyan-400/60";
+
+const details = [
+  { label: "Email", value: company.contact.email },
+  { label: "Phone", value: company.contact.phone },
+  { label: "Contact person", value: company.contact.person }
+] as const;
 
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <Section id="contact" className="pb-24">
+    <Section id="contact" className="pb-28">
       <Container>
-        <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-start">
+        <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-start">
           <div>
-            <p className="text-sm font-medium text-cyan-300/90">Contact</p>
-            <h2 className="mt-3 font-[var(--font-space)] text-3xl tracking-tight md:text-4xl">
-              Let’s build something unforgettable.
-            </h2>
-            <p className="mt-3 max-w-md text-base text-white/70">
-              Share your idea. We’ll respond with next steps, timeline, and a
-              clear path to launch.
-            </p>
+            <SectionHeading
+              eyebrow="Contact"
+              title="Let’s build something unforgettable."
+              description="Share your idea. We’ll respond with next steps, timeline, and a clear path to launch."
+            />
 
             <div className="mt-8 grid gap-3">
-              <div className="rounded-3xl bg-white/[0.04] p-5 ring-1 ring-white/10 backdrop-blur-xl">
-                <div className="text-sm font-medium text-white/85">Email</div>
-                <div className="mt-1 text-sm text-white/70">
-                  {company.contact.email}
-                </div>
-              </div>
-              <div className="rounded-3xl bg-white/[0.04] p-5 ring-1 ring-white/10 backdrop-blur-xl">
-                <div className="text-sm font-medium text-white/85">Phone</div>
-                <div className="mt-1 text-sm text-white/70">
-                  {company.contact.phone}
-                </div>
-              </div>
-              <div className="rounded-3xl bg-white/[0.04] p-5 ring-1 ring-white/10 backdrop-blur-xl">
-                <div className="text-sm font-medium text-white/85">
-                  Contact person
-                </div>
-                <div className="mt-1 text-sm text-white/70">
-                  {company.contact.person}
-                </div>
-              </div>
+              {details.map((d) => (
+                <Reveal key={d.label}>
+                  <div className="panel group px-5 py-4 transition hover:bg-white/[0.05]">
+                    <div className="panel-topline opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="relative text-xs uppercase tracking-[0.18em] text-white/45">
+                      {d.label}
+                    </div>
+                    <div className="relative mt-1.5 text-sm text-white/75">
+                      {d.value}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-6 -z-10 rounded-3xl bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-transparent blur-2xl" />
+            <div
+              aria-hidden
+              className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-cyan-500/10 via-purple-500/5 to-transparent blur-3xl"
+            />
             <form
-              className="rounded-3xl bg-white/[0.04] p-6 ring-1 ring-white/10 backdrop-blur-xl"
+              className="panel p-6 md:p-7"
               onSubmit={async (e) => {
                 e.preventDefault();
                 setError(null);
@@ -91,13 +95,14 @@ export function Contact() {
                 }
               }}
             >
-              <div className="grid gap-4">
+              <div className="panel-topline" />
+              <div className="relative grid gap-4">
                 <label className="grid gap-2">
                   <span className="text-sm text-white/70">Name</span>
                   <input
                     name="name"
                     required
-                    className="h-11 rounded-2xl bg-ink/40 px-4 text-sm text-white ring-1 ring-white/12 outline-none transition focus:ring-cyan-400/50"
+                    className={fieldClass}
                     placeholder="Your name"
                   />
                 </label>
@@ -108,7 +113,7 @@ export function Contact() {
                     name="email"
                     type="email"
                     required
-                    className="h-11 rounded-2xl bg-ink/40 px-4 text-sm text-white ring-1 ring-white/12 outline-none transition focus:ring-cyan-400/50"
+                    className={fieldClass}
                     placeholder="you@company.com"
                   />
                 </label>
@@ -119,13 +124,13 @@ export function Contact() {
                     name="message"
                     required
                     rows={5}
-                    className="rounded-2xl bg-ink/40 px-4 py-3 text-sm text-white ring-1 ring-white/12 outline-none transition focus:ring-cyan-400/50"
+                    className="rounded-2xl bg-ink/40 px-4 py-3 text-sm text-white ring-1 ring-white/12 outline-none transition placeholder:text-white/35 focus:ring-cyan-400/60"
                     placeholder="Tell us what you want to build..."
                   />
                 </label>
 
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="text-sm text-white/65">
+                  <div className="text-sm text-white/55">
                     {status === "sent"
                       ? "Message sent."
                       : status === "error"
@@ -152,4 +157,3 @@ export function Contact() {
     </Section>
   );
 }
-
