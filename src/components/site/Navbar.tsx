@@ -56,9 +56,21 @@ export function Navbar() {
                 {item.label}
               </a>
             ))}
+            <Link
+              href="/agents"
+              className="rounded-full px-3 py-2 text-sm text-white/75 transition hover:bg-white/5 hover:text-white"
+            >
+              Agents
+            </Link>
           </nav>
 
           <div className="flex items-center gap-2">
+            <Link
+              href="/agents"
+              className="rounded-full px-3 py-2 text-sm text-white/75 transition hover:bg-white/5 hover:text-white md:hidden"
+            >
+              Agents
+            </Link>
             <ThemeToggle className="hidden md:inline-flex" />
             <Button
               className="h-10 px-4 text-sm"
