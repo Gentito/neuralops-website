@@ -7,14 +7,19 @@ import { getAgent, getAgentParams, getTools } from "@/lib/agents";
 import { InstallPanel } from "@/components/agents/InstallPanel";
 import { Container } from "@/components/ui/Container";
 
-type Params = { division: string; slug: string };
+type Params = Promise<{ division: string; slug: string }>;
 
-export function generateStaticParams(): Params[] {
+export function generateStaticParams(): { division: string; slug: string }[] {
   return getAgentParams();
 }
 
-export function generateMetadata({ params }: { params: Params }): Metadata {
-  const data = getAgent(params.division, params.slug);
+export async function generateMetadata({
+  params
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { division, slug } = await params;
+  const data = getAgent(division, slug);
   if (!data) return { title: "Agent not found" };
   return {
     title: data.agent.name,
@@ -43,8 +48,9 @@ const PROSE = [
   "[&_hr]:my-8 [&_hr]:border-white/10"
 ].join(" ");
 
-export default function AgentPage({ params }: { params: Params }) {
-  const data = getAgent(params.division, params.slug);
+export default async function AgentPage({ params }: { params: Params }) {
+  const { division, slug } = await params;
+  const data = getAgent(division, slug);
   if (!data) notFound();
 
   const { agent, body } = data;
