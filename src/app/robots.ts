@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/"
     },
-    sitemap: "https://neuralops.vercel.app/sitemap.xml"
+    sitemap: "https://neuralops-website.vercel.app/sitemap.xml"
   };
 }
 

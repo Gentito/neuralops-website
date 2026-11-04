@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://neuralops.vercel.app";
+  const base = "https://neuralops-website.vercel.app";
   return [
     {
       url: base,

@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const space = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://neuralops.vercel.app"),
+  metadataBase: new URL("https://neuralops-website.vercel.app"),
   title: {
     default: "NeuralOps — Engineering Intelligent Digital Experiences",
     template: "%s · NeuralOps"

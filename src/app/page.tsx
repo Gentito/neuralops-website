@@ -16,7 +16,7 @@ export default function Page() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: company.name,
-    url: "https://neuralops.vercel.app",
+    url: "https://neuralops-website.vercel.app",
     email: company.contact.email,
     telephone: company.contact.phone,
     contactPoint: {
